@@ -6,13 +6,18 @@ namespace Models.Context;
 public class ApplicationDBContext : DbContext
 {
     
+    public ApplicationDBContext() {}
+    
     public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
     
-    public DbSet<Book> Books => Set<Book>();
-    public DbSet<Category> Categories => Set<Category>();
-    public DbSet<User> Users => Set<User>();
-    public DbSet<Review> Reviews => Set<Review>();
-    public DbSet<Transaction> Transactions => Set<Transaction>();
+    public virtual DbSet<Book> Books { get; set; }
+    public virtual DbSet<Category> Categories { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Review> Reviews { get; set; }
+    public virtual DbSet<Transaction> Transactions { get; set; }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder.UseSqlServer("Server=localhost,1433; Database=LibreriaDB; User Id=sa; Password=Justin-23022004; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

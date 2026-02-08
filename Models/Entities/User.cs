@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Models.Entities
 {
@@ -23,10 +24,14 @@ namespace Models.Entities
 
         public bool Active { get; set; }
 
+        [JsonIgnore]
         public ICollection<Book> Books { get; set; } = new List<Book>();
+        [JsonIgnore]
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
 
+        [JsonIgnore]
         public ICollection<Transaction> RequestedTransactions { get; set; } = new List<Transaction>();
+        [JsonIgnore]
         public ICollection<Transaction> OwnedTransactions { get; set; } = new List<Transaction>();
     }
 

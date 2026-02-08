@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Models.Entities
 {
@@ -9,10 +10,12 @@ namespace Models.Entities
         public int Id { get; set; }
 
         public int BookId { get; set; }
-        public Book Book { get; set; } = null!;
+        [JsonIgnore]
+        public virtual Book? Book { get; set; } = null!;
 
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
+        [JsonIgnore]
+        public virtual User? User { get; set; } = null!;
 
         public int Rating { get; set; }
 

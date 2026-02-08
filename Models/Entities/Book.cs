@@ -1,4 +1,6 @@
-﻿namespace Models.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Models.Entities
 {
     public class Book
     {
@@ -9,7 +11,8 @@
         public string Isbn { get; set; } = null!;
 
         public int CategoryId { get; set; }
-        public Category Category { get; set; } = null!;
+        [JsonIgnore]
+        public virtual Category? Category { get; set; } = null!;
 
         public String Condition { get; set; } = null!;
 
@@ -22,7 +25,8 @@
         public string ImageUrl { get; set; } = null!;
 
         public int UserId { get; set; }
-        public User User { get; set; } = null!;
+        [JsonIgnore]
+        public virtual User? User { get; set; } = null!;
 
         public bool Active { get; set; }
 
@@ -31,7 +35,9 @@
 
         public string Location { get; set; } = null!;
         
+        [JsonIgnore]
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        [JsonIgnore]
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 

@@ -1,4 +1,6 @@
-﻿namespace Models.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Models.Entities
 {
     public class Category
     {
@@ -8,6 +10,7 @@
 
         public string Description { get; set; } = null!;
 
+        [JsonIgnore]
         public ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }

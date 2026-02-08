@@ -45,7 +45,8 @@ public class ApplicationDBContext : DbContext
         modelBuilder.Entity<Review>()
             .HasOne(r => r.User)
             .WithMany(u => u.Reviews)
-            .HasForeignKey(r => r.UserId);
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Transaction -> Book (1:N)
         modelBuilder.Entity<Transaction>()

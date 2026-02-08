@@ -12,7 +12,7 @@ using Models.Context;
 namespace Models.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20260208203905_InitialCreate")]
+    [Migration("20260208204514_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -274,7 +274,7 @@ namespace Models.Migrations
                     b.HasOne("Models.Entities.User", "User")
                         .WithMany("Reviews")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Book");

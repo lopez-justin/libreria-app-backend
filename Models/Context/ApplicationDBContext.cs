@@ -15,6 +15,8 @@ public class ApplicationDBContext : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Review> Reviews { get; set; }
     public virtual DbSet<Transaction> Transactions { get; set; }
+    public virtual DbSet<AuthUser> AuthUsers { get; set; }
+
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=localhost,1433; Database=LibreriaDB; User Id=sa; Password=Justin-23022004; TrustServerCertificate=True");
@@ -67,6 +69,16 @@ public class ApplicationDBContext : DbContext
             .WithMany(u => u.OwnedTransactions)
             .HasForeignKey(t => t.OwnerId)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<AuthUser>()
+            .HasOne(a => a.User)
+            .WithOne(u => u.AuthUser)
+            .HasForeignKey<AuthUser>(a => a.UserId);
+
+        modelBuilder.Entity<AuthUser>()
+            .HasIndex(a => a.Email)
+            .IsUnique();
+
 
         // ISBN único
         modelBuilder.Entity<Book>()

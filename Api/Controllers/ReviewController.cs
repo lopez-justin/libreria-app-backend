@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReviewController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
@@ -23,6 +25,7 @@ namespace Api.Controllers
 
         // GET: api/Review
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Review>>> GetReviews()
         {
             return await _context.Reviews.ToListAsync();
@@ -30,6 +33,7 @@ namespace Api.Controllers
 
         // GET: api/Review/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Review>> GetReview(int id)
         {
             var review = await _context.Reviews.FindAsync(id);

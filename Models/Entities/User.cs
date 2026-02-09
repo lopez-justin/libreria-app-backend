@@ -8,20 +8,14 @@ namespace Models.Entities
     public class User
     {
         public int Id { get; set; }
-
+        [JsonIgnore]
+        public virtual AuthUser? AuthUser { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string Phone { get; set; } = null!;
-        public string Location { get; set; } = null!;
-
+        public string? Phone { get; set; } = null!;
+        public string? Location { get; set; } = null!;
         public string? Avatar { get; set; }
-
-        public decimal Rating { get; set; }
-
-        public int TotalBooks { get; set; }
-
         public DateTime MemberSince { get; set; }
-
         public bool Active { get; set; }
 
         [JsonIgnore]

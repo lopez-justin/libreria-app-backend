@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Api.Controllers
 
         // GET: api/User
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
@@ -83,6 +85,7 @@ namespace Api.Controllers
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
@@ -96,6 +99,33 @@ namespace Api.Controllers
 
             return NoContent();
         }
+        
+        [HttpPatch("{id}/deactivate")]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeactivateUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+                return NotFound();
+
+            // Evitar desactivar un usuario ya inactivo
+            if (!user.Active)
+                return BadRequest("El usuario ya está desactivado");
+            
+            var authUserId = int.Parse(User.FindFirst("userId")!.Value);
+            
+            if (user.Id == authUserId)
+                return BadRequest("No puedes desactivar tu propio usuario");
+
+            user.Active = false;
+
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
 
         private bool UserExists(int id)
         {

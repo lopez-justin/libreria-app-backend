@@ -63,6 +63,7 @@ namespace Api.Controllers
                 UserId = user.Id,
                 Email = dto.Email,
                 Password = dto.Password,
+                Role = "user",
                 Active = true
             };
 
@@ -85,6 +86,7 @@ namespace Api.Controllers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, authUser.UserId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, authUser.Email),
+                new Claim(ClaimTypes.Role, authUser.Role),
                 new Claim("userId", authUser.UserId.ToString())
             };
 
